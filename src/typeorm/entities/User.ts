@@ -1,4 +1,13 @@
-import { Column, Entity, PrimaryColumn } from 'typeorm';
+import {
+  Column,
+  Entity,
+  OneToOne,
+  PrimaryColumn,
+  JoinColumn,
+  OneToMany,
+} from 'typeorm';
+import { Profile } from './Profile';
+import { Post } from './Post';
 
 // Tên bảng
 @Entity({ name: 'users' })
@@ -18,4 +27,11 @@ export class User {
 
   @Column({ nullable: true, type: 'date' })
   CreatedDate: Date;
+
+  @OneToOne(() => Profile) // Định nghĩa mối quan hệ 1 - 1
+  @JoinColumn()
+  profile: Profile;
+
+  @OneToMany(() => Post, (post) => post.user) // Định nghĩa mối quan hệ 1 - n
+  posts: Post[];
 }

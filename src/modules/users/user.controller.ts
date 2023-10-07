@@ -13,6 +13,8 @@ import { UpdateUserDto } from './dtos/update.dto';
 import { ResponseData } from './../../global/responses/reponse.global';
 import { User } from './../../typeorm/entities/User';
 import { HttpMessage, HttpStatus } from 'src/global/enums/enum';
+import { UserProfileDto } from './dtos/createProfile.dto';
+import { CreateUserPostDto } from './dtos/createUserPost.dto';
 
 @Controller('api/v1/users')
 export class UserController {
@@ -102,5 +104,21 @@ export class UserController {
         HttpStatus.ERROR,
       );
     }
+  }
+
+  @Post('/:id/profile')
+  async createProfileUser(
+    @Param('id') id: string,
+    @Body() userProfileDto: UserProfileDto,
+  ) {
+    return await this.userService.createProfileUser(id, userProfileDto);
+  }
+
+  @Post('/:id/post')
+  async createPost(
+    @Param('id') id: string,
+    @Body() createUserPostDto: CreateUserPostDto,
+  ) {
+    return this.userService.createUserPostDto(id, createUserPostDto);
   }
 }
